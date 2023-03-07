@@ -36,7 +36,7 @@ Follow the following steps to install the app:
 - Follow the prompts to add all of the relevant information about team members.
 - When prompted, choose whether you want to add more team members or ```Finish building the team```
 - When you have finished and choose ```Finish building the team``` you will see the following message ```HTML File Created Successfully!```
-- The HTML file will be added to a subdirectory called ```generated_files```
+- The HTML file will be added to a subdirectory called ```output```
 
 ## Credits
 
