@@ -10,18 +10,11 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
+const team = [];
+
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
 class Generator {
-
-  constructor() {
-    this.manager = [];
-    this.engineers = [];
-    this.interns = [];
-    this.team = [];
-    this.engineersCount = 0;
-    this.internsCount = 0;
-  }
 
   init() {
     this.addTeamManager();
@@ -56,8 +49,8 @@ class Generator {
         const id = answers.managerID;
         const email = answers.managerEmail;
         const number = answers.managerOfficeNumber;
-        const manager = {name, id, email, number};
-        this.manager = manager;
+        const manager = new Manager(name, id, email, number);
+        team.push(manager);
         this.addMore();
       });
   };
@@ -120,9 +113,8 @@ class Generator {
         const email = answers.engineerEmail;
         const git = answers.engineerGithub;
         const count = this.engineersCount;
-        const engineer = {name, id, email, git};
-        this.engineers[count] = engineer;
-        this.engineersCount++
+        const engineer = new Engineer(name, id, email, git);
+        team.push(engineer);
         this.addMore();
       });
   };
@@ -156,27 +148,17 @@ class Generator {
         const id = answers.internID;
         const email = answers.internEmail;
         const school = answers.internSchool;
-        const count = this.internsCount;
-        const intern = {name, id, email, school};
-        this.interns[count] = intern;
-        this.internsCount++
+        const intern = new Intern(name, id, email, school);
+        team.push(intern);
         this.addMore();
       });
   };
 
   generateHTML() {
-    const team = [];
-    team.push(new Manager(this.manager.name, this.manager.id, this.manager.email, this.manager.number));
-    for (let i = 0; i < this.engineers.length; i++) {
-      team.push(new Engineer(this.engineers[i].name, this.engineers[i].id, this.engineers[i].email, this.engineers[i].git));
-    }
-    for (let i = 0; i < this.interns.length; i++) {
-      team.push(new Intern(this.interns[i].name, this.interns[i].id, this.interns[i].email, this.interns[i].school));
-    }
-    
     console.log(team);
-    render(team);
-    console.log(render());
+    fs.writeFile(outputPath, render(team), function() {
+      console.log("Successful");
+    });
   };
 };
 
