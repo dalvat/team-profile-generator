@@ -1,0 +1,38 @@
+.card {
+  padding: 0;
+}
+.manager-card {
+  background-color: rgb(185, 210, 255);
+}
+
+.manager-card .card-header {
+  background-color: rgb(130, 160, 255);
+}
+
+.manager-card li {
+  background-color: rgb(130, 160, 255);
+}
+
+.engineer-card {
+  background-color: rgb(200, 255, 215);
+}
+
+.engineer-card .card-header {
+  background-color: rgb(125, 225, 180);
+}
+
+.engineer-card li {
+  background-color: rgb(125, 225, 180);
+}
+
+.intern-card {
+  background-color: rgb(205, 200, 255);
+}
+
+.intern-card .card-header {
+  background-color: rgb(140, 125, 225);
+}
+
+.intern-card li {
+  background-color: rgb(140, 125, 225);
+}
