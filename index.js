@@ -10,18 +10,21 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
+// array to store employee objects
 const team = [];
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
 class Generator {
 
+// init method to initiate app and call addTeamManager method
   init() {
     this.addTeamManager();
   }
 
+// addTeamManager calls inquirer .prompt
   addTeamManager() {
     inquirer
+// .prompt asks manager related questions
       .prompt([
         {
           type: 'input',
@@ -44,6 +47,9 @@ class Generator {
           message: "What is the Team Manager's Office Number?",
         },
       ])
+// .then takes the user response inputs and creates a new Manager object
+// and pushes the Manager object to the team array
+// the addMore method is then called
       .then((answers) => {
         const name = answers.managerName;
         const id = answers.managerID;
@@ -55,8 +61,10 @@ class Generator {
       });
   };
 
+// addMore calls inquirer .prompt
   addMore() {
     inquirer
+// .prompt asks the user to choose an option to proceed
       .prompt([
         {
           type: 'list',
@@ -65,6 +73,7 @@ class Generator {
           message: 'Select an Option:'
         }
       ])
+// .then contains a switch statement to call the appropriate method
       .then((answers) => {
         switch (answers.userChoice) {
           case 'Add an engineer':
@@ -83,8 +92,10 @@ class Generator {
       })
   };
 
+// addEngineer calls inquirer .prompt
   addEngineer() {
     inquirer
+// .prompt asks engineer related questions
       .prompt([
         {
           type: 'input',
@@ -107,6 +118,9 @@ class Generator {
           message: "What is the Engineer's GitHub username?",
         },
       ])
+// .then takes the user response inputs and creates a new Engineer object
+// and pushes the Engineer object to the team array
+// the addMore method is then called
       .then((answers) => {
         const name = answers.engineerName;
         const id = answers.engineerID;
@@ -119,8 +133,10 @@ class Generator {
       });
   };
 
+// addIntern calls inquirer .prompt
   addIntern() {
     inquirer
+// .prompt asks intern related questions
       .prompt([
         {
           type: 'input',
@@ -143,6 +159,9 @@ class Generator {
           message: "What is the name of the Intern's school?",
         },
       ])
+// .then takes the user response inputs and creates a new Intern object
+// and pushes the Intern object to the team array
+// the addMore method is then called
       .then((answers) => {
         const name = answers.internName;
         const id = answers.internID;
@@ -154,14 +173,19 @@ class Generator {
       });
   };
 
+// generateHTML uses the fs.writeFile method to create a new HTML file
+// the first argument is the save path, the second calls the render method
+// this passes the team array to the page-template.js file and internal methods
+// to produce the output file
   generateHTML() {
-    console.log(team);
     fs.writeFile(outputPath, render(team), function() {
-      console.log("Successful");
+      console.log("HTML File Created Successfully!");
     });
   };
 };
 
+// a new Generator object is created to invoke the app
 const generate = new Generator();
 
+// generate.init initiates the app as above
 generate.init();
