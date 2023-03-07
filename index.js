@@ -3,7 +3,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const path = require("path");
 const fs = require("fs");
-const inquirer =require ("inquirer");
+const inquirer = require ("inquirer");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
@@ -56,7 +56,7 @@ class Generator {
         const id = answers.managerID;
         const email = answers.managerEmail;
         const number = answers.managerOfficeNumber;
-        const manager = [name, id, email, number];
+        const manager = {name, id, email, number};
         this.manager = manager;
         this.addMore();
       });
@@ -120,10 +120,9 @@ class Generator {
         const email = answers.engineerEmail;
         const git = answers.engineerGithub;
         const count = this.engineersCount;
-        const engineer = [name, id, email, git];
+        const engineer = {name, id, email, git};
         this.engineers[count] = engineer;
         this.engineersCount++
-        
         this.addMore();
       });
   };
@@ -158,7 +157,7 @@ class Generator {
         const email = answers.internEmail;
         const school = answers.internSchool;
         const count = this.internsCount;
-        const intern = [name, id, email, school];
+        const intern = {name, id, email, school};
         this.interns[count] = intern;
         this.internsCount++
         this.addMore();
@@ -166,20 +165,20 @@ class Generator {
   };
 
   generateHTML() {
-    const manager = this.manager;
-    const engineers = this.engineers;
-    const interns = this.interns;
+    const team = [];
+    team.push(new Manager(this.manager.name, this.manager.id, this.manager.email, this.manager.number));
+    for (let i = 0; i < this.engineers.length; i++) {
+      team.push(new Engineer(this.engineers[i].name, this.engineers[i].id, this.engineers[i].email, this.engineers[i].git));
+    }
+    for (let i = 0; i < this.interns.length; i++) {
+      team.push(new Intern(this.interns[i].name, this.interns[i].id, this.interns[i].email, this.interns[i].school));
+    }
     
-    // const teamHTML = render(this.team);
-    // console.log(teamHTML);
+    console.log(team);
+    render(team);
+    console.log(render());
   };
-
 };
-
-// const newManager = new Manager('Joe Bloggs', 1, 'test@test.com', 101);
-// let managerName = newManager.getName();
-// console.log(newManager);
-// console.log(managerName);
 
 const generate = new Generator();
 
